@@ -3,6 +3,7 @@
 CONSOLE_ENABLE = no
 COMMAND_ENABLE = no
 ORYX_ENABLE = yes
+# Was yes initially, but didn't build
 RGB_MATRIX_CUSTOM_KB = no
 TAP_DANCE_ENABLE = yes
 SPACE_CADET_ENABLE = no
