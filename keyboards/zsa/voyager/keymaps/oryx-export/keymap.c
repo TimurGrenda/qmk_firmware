@@ -29,21 +29,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     MO(4),          KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,                                           KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_LBRC,
     KC_LEFT_CTRL,   KC_A,           KC_S,           KC_D,           KC_F,           KC_G,                                           KC_H,           KC_J,           KC_K,           KC_L,           KC_SCLN,        KC_QUOTE,
     TO(5),          KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,                                           KC_N,           KC_M,           KC_COMMA,       KC_DOT,         KC_SLASH,       KC_RBRC,
-                                                    MO(1),          KC_LEFT_SHIFT,                                  KC_SPACE,       MO(2)
+                                                    MO(_NAV),          KC_LEFT_SHIFT,                                  KC_SPACE,       MO(_SYM)
   ),
   [_NAV] = LAYOUT_voyager(
     KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,
     KC_NO,          KC_TAB,         LALT(KC_TAB),   LGUI(LSFT(KC_LBRC)),LGUI(LSFT(KC_RBRC)),KC_AUDIO_VOL_UP,                                KC_HOME,        KC_PGDN,        KC_PAGE_UP,     KC_END,         KC_DELETE,      KC_NO,
     KC_NO,          OSM(MOD_LSFT),  OSM(MOD_LCTL),  OSM(MOD_LALT),  OSM(MOD_LGUI),  KC_AUDIO_VOL_DOWN,                                KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       KC_ENTER,       KC_NO,
     KC_NO,          KC_MAC_UNDO,    KC_MAC_CUT,     KC_MAC_COPY,    KC_MAC_PASTE,   TD(DANCE_0),                                    KC_CAPS,        KC_BSPC,        KC_NO,          LALT(LCTL(KC_SPACE)),KC_NO,          KC_NO,
-                                                    KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, MO(3)
+                                                    KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT,KC_TRANSPARENT
   ),
   [_SYM] = LAYOUT_voyager(
     KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,
     KC_NO,          KC_ESCAPE,      KC_LBRC,        KC_LCBR,        KC_LPRN,        KC_TILD,                                        KC_CIRC,        KC_RPRN,        KC_RCBR,        KC_RBRC,        KC_GRAVE,       KC_NO,
     KC_NO,          KC_MINUS,       KC_ASTR,        KC_EQUAL,       KC_UNDS,        KC_DLR,                                         KC_HASH,        OSM(MOD_RGUI),  OSM(MOD_RALT),  OSM(MOD_RCTL),  OSM(MOD_RSFT),  KC_NO,
     KC_NO,          KC_PLUS,        KC_PIPE,        KC_AT,          KC_SLASH,       KC_PERC,                                        KC_NO,          KC_BSLS,        KC_AMPR,        KC_QUES,        KC_EXLM,        KC_NO,
-                                                    MO(3),          KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
+                                                    KC_TRANSPARENT,          KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
   [_NUM] = LAYOUT_voyager(
     KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,
@@ -209,26 +209,30 @@ tap_dance_action_t tap_dance_actions[] = {
         [DANCE_0] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_0, dance_0_finished, dance_0_reset),
 };
 
+layer_state_t layer_state_set_user(layer_state_t state) {
+  return update_tri_layer_state(state, _NAV, _SYM, _NUM);
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case NAV:
-      if (record->event.pressed) {
-        layer_on(_NAV);
-        update_tri_layer(_NAV, _SYM, _NUM);
-      } else {
-        layer_off(_NAV);
-        update_tri_layer(_NAV, _SYM, _NUM);
-      }
-      return false;
-    case SYM:
-      if (record->event.pressed) {
-        layer_on(_SYM);
-        update_tri_layer(_NAV, _SYM, _NUM);
-      } else {
-        layer_off(_SYM);
-        update_tri_layer(_NAV, _SYM, _NUM);
-      }
-      return false;
+    /* case NAV: */
+    /*   if (record->event.pressed) { */
+    /*     layer_on(_NAV); */
+    /*     update_tri_layer(_NAV, _SYM, _NUM); */
+    /*   } else { */
+    /*     layer_off(_NAV); */
+    /*     update_tri_layer(_NAV, _SYM, _NUM); */
+    /*   } */
+    /*   return false; */
+    /* case SYM: */
+    /*   if (record->event.pressed) { */
+    /*     layer_on(_SYM); */
+    /*     update_tri_layer(_NAV, _SYM, _NUM); */
+    /*   } else { */
+    /*     layer_off(_SYM); */
+    /*     update_tri_layer(_NAV, _SYM, _NUM); */
+    /*   } */
+    /*   return false; */
     case RGB_SLD:
       if (record->event.pressed) {
         rgblight_mode(1);
